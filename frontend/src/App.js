@@ -11,10 +11,12 @@ function App() {
     const fetchData = async () => {
       try {
         const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
+        console.log('Connecting to:', backendUrl);
         const response = await fetch(`${backendUrl}/api/test`);
         const result = await response.json();
         setData(result);
       } catch (err) {
+        console.error('Error:', err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -32,6 +34,9 @@ function App() {
         
         <div style={{marginTop: '20px', padding: '20px', border: '1px solid #ccc', borderRadius: '5px'}}>
           <h2>Backend Connection Status</h2>
+          <p style={{fontSize: '12px', color: '#666'}}>
+            Backend URL: {process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000'}
+          </p>
           {loading && <p>Loading...</p>}
           {error && <p style={{color: 'red'}}>Error: {error}</p>}
           {data && (
